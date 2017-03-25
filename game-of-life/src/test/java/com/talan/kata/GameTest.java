@@ -61,14 +61,14 @@ public class GameTest
 		Cell currentCell = new Cell(2, 3);
 		Cell firstNeighbor = new Cell(2, 4);
 		Cell secondNeighbor = new Cell(2, 2);
-		Cell thirdNeighbor = new Cell(4, 3);
+		Cell thirdNeighbor = new Cell(1, 4);
 		aliveCells.add(currentCell);
 		aliveCells.add(firstNeighbor);
 		aliveCells.add(secondNeighbor);
 		aliveCells.add(thirdNeighbor);
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
-		assertThat(game.getAliveCells()).containsExactly(currentCell);
+		assertThat(game.getAliveCells()).containsOnly(currentCell, firstNeighbor, thirdNeighbor);
 	}
 	
 }

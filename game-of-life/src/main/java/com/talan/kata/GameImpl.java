@@ -22,7 +22,7 @@ public class GameImpl implements Game
 		Set<Cell> nextGeneration = new HashSet<>();
 		for (Cell cell : aliveCells) {
 			long aliveSurroundingCellsCount = NeighborUtility.countAliveSurroundingCells(aliveCells , cell);
-			if (aliveSurroundingCellsCount >= 2) {
+			if (aliveSurroundingCellsCount == 2 || aliveSurroundingCellsCount == 3) {
 				nextGeneration.add(cell);
 			}
 		}
