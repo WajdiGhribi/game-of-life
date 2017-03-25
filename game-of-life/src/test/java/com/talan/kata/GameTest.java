@@ -119,4 +119,23 @@ public class GameTest
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
 		assertThat(deadCells.size()).isEqualTo(3);
 	}
+	
+	
+	@Test 
+	public void CellInBottomOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+		Cell currentCell = new Cell(0, 0);
+		aliveCells.add(currentCell);		
+		game.setAliveCells(aliveCells);
+		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
+		assertThat(deadCells.size()).isEqualTo(3);
+	}
+	
+	@Test 
+	public void CellInTopOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+		Cell currentCell = new Cell(0, 6);
+		aliveCells.add(currentCell);		
+		game.setAliveCells(aliveCells);
+		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
+		assertThat(deadCells.size()).isEqualTo(3);
+	}
 }
