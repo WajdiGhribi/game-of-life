@@ -6,7 +6,14 @@ import java.util.Set;
 public class GameImpl implements Game
 {
 	private Set<Cell> aliveCells = new HashSet<>();
+	private int edgeX;
+	private int edgeY;
 	
+	public GameImpl(int edgeXAxis, int edgeYAxis) {
+		edgeX = edgeXAxis;
+		edgeY = edgeYAxis;
+	}
+
 	@Override
 	public void setAliveCells(Set<Cell> aliveCells) {
 		this.aliveCells = aliveCells;
@@ -21,7 +28,7 @@ public class GameImpl implements Game
 	public void executeGeneration() {
 		Set<Cell> nextGeneration = new HashSet<>();
 		for (Cell cell : aliveCells) {
-			long aliveSurroundingCellsCount = NeighborUtility.countAliveSurroundingCells(aliveCells , cell);
+			long aliveSurroundingCellsCount = NeighborUtility.countAliveSurroundingCells(aliveCells, cell, edgeX, edgeY);
 			if (aliveSurroundingCellsCount == 2 || aliveSurroundingCellsCount == 3) {
 				nextGeneration.add(cell);
 			}
@@ -32,9 +39,9 @@ public class GameImpl implements Game
 	}
 
 	private void resurrectDeadCells(Cell cell, Set<Cell> nextGeneration) {
-		Set<Cell> deadSurroundingCells = NeighborUtility.getDeadSurroundingCells(aliveCells, cell);
+		Set<Cell> deadSurroundingCells = NeighborUtility.getDeadSurroundingCells(aliveCells, cell, edgeX, edgeY);
 		for (Cell deadCell : deadSurroundingCells) {
-			long liveNeighborCount = NeighborUtility.countAliveSurroundingCells(aliveCells , deadCell);
+			long liveNeighborCount = NeighborUtility.countAliveSurroundingCells(aliveCells , deadCell, edgeX, edgeY);
 			if (liveNeighborCount == 3) {
 				nextGeneration.add(deadCell);
 			}

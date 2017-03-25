@@ -17,7 +17,7 @@ public class GameTest
 	
 	@Before
 	public void setUp() {
-		game = new GameImpl();
+		game = new GameImpl(6,6);
 		aliveCells = new HashSet<Cell>();
 	}
 	
@@ -53,7 +53,7 @@ public class GameTest
 		aliveCells.add(secondNeighbor);
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
-		assertThat(game.getAliveCells()).containsExactly(currentCell);
+		assertThat(game.getAliveCells()).contains(currentCell);
 	}
 	
 	@Test
@@ -68,7 +68,7 @@ public class GameTest
 		aliveCells.add(thirdNeighbor);
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
-		assertThat(game.getAliveCells()).containsOnly(currentCell, firstNeighbor, thirdNeighbor);
+		assertThat(game.getAliveCells()).contains(currentCell);
 	}
 
 	@Test
@@ -102,4 +102,12 @@ public class GameTest
 		assertThat(game.getAliveCells()).contains(currentCell);
 	}
 	
+	@Test 
+	public void CellInBottomOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+		Cell currentCell = new Cell(6, 0);
+		aliveCells.add(currentCell);		
+		game.setAliveCells(aliveCells);
+		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
+		assertThat(deadCells.size()).isEqualTo(3);
+	}
 }
