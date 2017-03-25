@@ -110,4 +110,13 @@ public class GameTest
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
 		assertThat(deadCells.size()).isEqualTo(3);
 	}
+	
+	@Test 
+	public void CellInTopOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+		Cell currentCell = new Cell(6, 6);
+		aliveCells.add(currentCell);		
+		game.setAliveCells(aliveCells);
+		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
+		assertThat(deadCells.size()).isEqualTo(3);
+	}
 }
