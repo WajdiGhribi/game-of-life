@@ -1,13 +1,15 @@
 package com.talan.kata;
 
-/**
- * Hello world!
- *
- */
-public class App 
+import java.util.HashSet;
+import java.util.Set;
+
+public class GameImpl implements Game
 {
-    public static void main( String[] args )
-    {
-        System.out.println( "Hello World!" );
-    }
+	private Set<Cells> aliveCells = new HashSet<Cells>();
+	
+	public Set<Cells> getAliveCells() {
+		return aliveCells;
+	}
+
+
 }
