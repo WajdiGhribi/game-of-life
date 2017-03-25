@@ -4,8 +4,10 @@ import java.util.Set;
 
 public interface Game {
 	
-	public Set<Cells> getAliveCells();
+	public Set<Cell> getAliveCells();
 
-	public void setAliveCells(Set<Cells> aliveCells);
+	public void setAliveCells(Set<Cell> aliveCells);
+
+	public void executeGeneration();
 	
 }

@@ -5,15 +5,28 @@ import java.util.Set;
 
 public class GameImpl implements Game
 {
-	private Set<Cells> aliveCells = new HashSet<Cells>();
+	private Set<Cell> aliveCells = new HashSet<>();
 	
-	public void setAliveCells(Set<Cells> aliveCells) {
+	@Override
+	public void setAliveCells(Set<Cell> aliveCells) {
 		this.aliveCells = aliveCells;
 	}
 
-	public Set<Cells> getAliveCells() {
+	@Override
+	public Set<Cell> getAliveCells() {
 		return aliveCells;
 	}
 
-
+	@Override
+	public void executeGeneration() {
+		Set<Cell> nextGeneration = new HashSet<>();
+		for (Cell cell : aliveCells) {
+			long aliveSurroundingCellsCount = NeighborUtility.countAliveSurroundingCells(aliveCells , cell);
+			if (aliveSurroundingCellsCount >= 2) {
+				nextGeneration.add(cell);
+			}
+		}
+		aliveCells = nextGeneration;
+		
+	}
 }
