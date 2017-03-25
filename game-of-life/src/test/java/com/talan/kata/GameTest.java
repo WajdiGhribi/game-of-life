@@ -35,11 +35,24 @@ public class GameTest
 	}
 	
 	@Test
-	public void singleCellShouldDieAfterGeneration() {
+	public void singleCellShouldDieWhenGenerationOccurs() {
 		Cell cell = new Cell(2, 3);
 		aliveCells.add(cell);
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
 		assertThat(game.getAliveCells().size()).isEqualTo(0);
+	}
+	
+	@Test
+	public void cellSurroundedByTwoNeighborsShouldSurviveWhenGenerationOccurs() {
+		Cell currentCell = new Cell(2, 3);
+		Cell firstNeighbor = new Cell(2, 4);
+		Cell secondNeighbor = new Cell(2, 2);
+		aliveCells.add(currentCell);
+		aliveCells.add(firstNeighbor);
+		aliveCells.add(secondNeighbor);
+		game.setAliveCells(aliveCells);
+		game.executeGeneration();
+		assertThat(game.getAliveCells()).containsExactly(currentCell);
 	}
 }

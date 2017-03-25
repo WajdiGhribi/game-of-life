@@ -7,7 +7,7 @@ public class NeighborUtility {
 
 	public static long countAliveSurroundingCells(Set<Cell> aliveCells, Cell cell) {
 		Set<Cell> surroundingCells = getSurroundingCells(cell); 	
-		return surroundingCells.stream().filter(aliveCells::contains).count();
+		return surroundingCells.stream().filter(x -> aliveCells.contains(x)).count();
 	}
 
 	private static Set<Cell> getSurroundingCells(Cell cell) {
