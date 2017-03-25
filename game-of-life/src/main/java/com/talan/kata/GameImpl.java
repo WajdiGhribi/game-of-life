@@ -7,6 +7,10 @@ public class GameImpl implements Game
 {
 	private Set<Cells> aliveCells = new HashSet<Cells>();
 	
+	public void setAliveCells(Set<Cells> aliveCells) {
+		this.aliveCells = aliveCells;
+	}
+
 	public Set<Cells> getAliveCells() {
 		return aliveCells;
 	}
