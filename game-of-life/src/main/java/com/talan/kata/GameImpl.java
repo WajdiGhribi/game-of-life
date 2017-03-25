@@ -25,8 +25,20 @@ public class GameImpl implements Game
 			if (aliveSurroundingCellsCount == 2 || aliveSurroundingCellsCount == 3) {
 				nextGeneration.add(cell);
 			}
+			resurrectDeadCells(cell, nextGeneration);
 		}
 		aliveCells = nextGeneration;
 		
 	}
+
+	private void resurrectDeadCells(Cell cell, Set<Cell> nextGeneration) {
+		Set<Cell> deadSurroundingCells = NeighborUtility.getDeadSurroundingCells(aliveCells, cell);
+		for (Cell deadCell : deadSurroundingCells) {
+			long liveNeighborCount = NeighborUtility.countAliveSurroundingCells(aliveCells , deadCell);
+			if (liveNeighborCount == 3) {
+				nextGeneration.add(deadCell);
+			}
+		}
+	}
+
 }

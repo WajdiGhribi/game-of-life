@@ -88,4 +88,18 @@ public class GameTest
 		assertThat(game.getAliveCells()).doesNotContain(currentCell);
 	}
 	
+	@Test
+	public void deadCellShouldComesBackToLifeWhenGenerationOccursAndItIsSurroundedByThreeAliveNeigbors() {
+		Cell currentCell = new Cell(2, 3);
+		Cell firstNeighbor = new Cell(2, 4);
+		Cell secondNeighbor = new Cell(2, 2);
+		Cell thirdNeighbor = new Cell(1, 4);
+		aliveCells.add(firstNeighbor);
+		aliveCells.add(secondNeighbor);
+		aliveCells.add(thirdNeighbor);		
+		game.setAliveCells(aliveCells);
+		game.executeGeneration();
+		assertThat(game.getAliveCells()).contains(currentCell);
+	}
+	
 }
