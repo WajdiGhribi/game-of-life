@@ -86,9 +86,9 @@ public class GameImpl implements Game {
 	@Override
 	public String toString() {
 		StringBuilder buffer = new StringBuilder();
-		buffer.append(edgeX);
+		buffer.append(edgeX + 1);
 		buffer.append(" ");
-		buffer.append(edgeY);
+		buffer.append(edgeY + 1);
 		buffer.append("\n");
 		for (int x = 0; x <= edgeX; x++) {
 			for (int y = 0; y <= edgeY; y++) {

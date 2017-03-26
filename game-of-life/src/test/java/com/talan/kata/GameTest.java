@@ -177,7 +177,7 @@ public class GameTest
 		aliveCells.add(new CellImpl(3, 5));
 		aliveCells.add(new CellImpl(3, 4));	
 		aliveCells.add(new CellImpl(4, 4));
-		String output = "4 5\n"+
+		String output = "5 6\n"+
 				"......\n"+
 				"......\n"+
 				"......\n"+
