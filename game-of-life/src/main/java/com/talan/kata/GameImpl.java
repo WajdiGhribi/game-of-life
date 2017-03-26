@@ -9,6 +9,8 @@ public class GameImpl implements Game
 	private Set<Cell> aliveCells = new HashSet<>();
 	private int edgeX;
 	private int edgeY;
+	private char ALIVE = '*';
+	private char DEAD = '.';
 	
 	public GameImpl(int edgeXAxis, int edgeYAxis) {
 		edgeX = edgeXAxis;
@@ -52,5 +54,31 @@ public class GameImpl implements Game
 			}
 		}
 	}
+	
+    @Override
+    public String toString() {
+        StringBuffer buffer = new StringBuffer();
+        buffer.append(edgeX);
+        buffer.append(" ");
+        buffer.append(edgeY);
+        buffer.append("\n");
+        for (int x = 0; x <= edgeX; x++) {
+            for (int y = 0; y <= edgeY; y++) {
+                if (containsAliveCells(aliveCells, x ,y)) {
+                    buffer.append(ALIVE);
+                } else {
+                    buffer.append(DEAD);
+                }
+            }
+            buffer.append("\n");
+        }
+        return buffer.toString();
+    }
 
+    // To avoid aliveCells.contains(new Cell(x, y)): creating an object in each caracther 
+	private boolean containsAliveCells(Set<Cell> aliveCells, int x, int y) {
+		return aliveCells.stream()
+				.filter(elem -> elem.getX() == x && elem.getY() == y)
+					.count() > 0;
+	}
 }

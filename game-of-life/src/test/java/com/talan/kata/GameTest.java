@@ -170,4 +170,20 @@ public class GameTest
 		game.executeGeneration();
 		assertThat(game.getAliveCells().size()).isEqualTo(4);
 	}
+	
+	@Test
+	public void outPutResultShouldBeReflectGenerationStrategy(){
+		aliveCells.add(new Cell(3, 5));
+		aliveCells.add(new Cell(3, 4));	
+		aliveCells.add(new Cell(4, 4));
+		String output = "4 5\n"+
+				"......\n"+
+				"......\n"+
+				"......\n"+
+				"....**\n"+
+				"....**\n";
+		game.setAliveCells(aliveCells);
+		game.executeGeneration();
+		assertThat(game.toString().equals(output)).isTrue();
+	}
 }
