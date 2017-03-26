@@ -17,7 +17,7 @@ public class GameTest
 	
 	@Before
 	public void setUp() {
-		game = new GameImpl(6,6);
+		game = new GameImpl(4,5);
 		aliveCells = new HashSet<Cell>();
 	}
 	
@@ -103,7 +103,7 @@ public class GameTest
 	}
 	
 	@Test 
-	public void CellInBottomOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+	public void cellInBottomOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
 		Cell currentCell = new Cell(6, 0);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
@@ -112,7 +112,7 @@ public class GameTest
 	}
 	
 	@Test 
-	public void CellInTopOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+	public void cellInTopOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
 		Cell currentCell = new Cell(6, 6);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
@@ -122,7 +122,7 @@ public class GameTest
 	
 	
 	@Test 
-	public void CellInBottomOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+	public void cellInBottomOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
 		Cell currentCell = new Cell(0, 0);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
@@ -131,11 +131,23 @@ public class GameTest
 	}
 	
 	@Test 
-	public void CellInTopOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
+	public void cellInTopOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
 		Cell currentCell = new Cell(0, 6);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
 		assertThat(deadCells.size()).isEqualTo(3);
 	}
+		
+	@Test 
+	public void cellsOutOfEdgeShouldNotBeAddedToGrid(){
+
+		aliveCells.add(new Cell(5, 5));
+		aliveCells.add(new Cell(-1, 5));	
+		aliveCells.add(new Cell(4, -1));
+		aliveCells.add(new Cell(4, 6));
+		game.setAliveCells(aliveCells);
+		assertThat(game.getAliveCells().size()).isEqualTo(0);
+	}
+	
 }

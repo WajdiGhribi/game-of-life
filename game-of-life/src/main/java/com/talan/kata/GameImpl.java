@@ -2,6 +2,7 @@ package com.talan.kata;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class GameImpl implements Game
 {
@@ -15,8 +16,12 @@ public class GameImpl implements Game
 	}
 
 	@Override
-	public void setAliveCells(Set<Cell> aliveCells) {
-		this.aliveCells = aliveCells;
+	public void setAliveCells(Set<Cell> inputAliveCells) {
+		this.aliveCells = inputAliveCells
+							.stream()
+								.filter(cell -> (cell.getX() >= 0 && cell.getX() <= edgeX))
+									.filter(cell -> (cell.getY() >= 0 && cell.getY() <= edgeY))
+										.collect(Collectors.toSet());
 	}
 
 	@Override
