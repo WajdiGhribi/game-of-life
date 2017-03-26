@@ -159,4 +159,15 @@ public class GameTest
 		game.executeGeneration();
 		assertThat(game.getAliveCells().size()).isEqualTo(4);
 	}
+	
+	
+	@Test 
+	public void CellInCoordinate66ShouldBeAliveWhenGenerationOccursAndItIsSurroundedByThreeAliveCells(){
+		aliveCells.add(new Cell(3, 5));
+		aliveCells.add(new Cell(3, 4));	
+		aliveCells.add(new Cell(4, 4));
+		game.setAliveCells(aliveCells);
+		game.executeGeneration();
+		assertThat(game.getAliveCells().size()).isEqualTo(4);
+	}
 }
