@@ -17,7 +17,8 @@ public class GameTest
 	
 	@Before
 	public void setUp() {
-		game = new GameImpl(4,5);
+		Rules rules = new RulesImpl();
+		game = new GameImpl(4,5, rules);
 		aliveCells = new HashSet<Cell>();
 	}
 	
@@ -28,7 +29,7 @@ public class GameTest
 	
 	@Test
 	public void gameShouldHasOnlyOneAliveCellsWhenAliveCellIsAdded() {
-		Cell cell = new Cell(1, 2);
+		Cell cell = new CellImpl(1, 2);
 		aliveCells.add(cell);
 		game.setAliveCells(aliveCells);
 		assertThat(game.getAliveCells()).containsExactly(cell);
@@ -36,7 +37,7 @@ public class GameTest
 	
 	@Test
 	public void singleCellShouldDieWhenGenerationOccurs() {
-		Cell cell = new Cell(2, 3);
+		Cell cell = new CellImpl(2, 3);
 		aliveCells.add(cell);
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
@@ -45,9 +46,9 @@ public class GameTest
 	
 	@Test
 	public void cellSurroundedByTwoNeighborsShouldSurviveWhenGenerationOccurs() {
-		Cell currentCell = new Cell(2, 3);
-		Cell firstNeighbor = new Cell(2, 4);
-		Cell secondNeighbor = new Cell(2, 2);
+		Cell currentCell = new CellImpl(2, 3);
+		Cell firstNeighbor = new CellImpl(2, 4);
+		Cell secondNeighbor = new CellImpl(2, 2);
 		aliveCells.add(currentCell);
 		aliveCells.add(firstNeighbor);
 		aliveCells.add(secondNeighbor);
@@ -58,10 +59,10 @@ public class GameTest
 	
 	@Test
 	public void cellSurroundedByThreeNeighborsShouldSurviveWhenGenerationOccurs() {
-		Cell currentCell = new Cell(2, 3);
-		Cell firstNeighbor = new Cell(2, 4);
-		Cell secondNeighbor = new Cell(2, 2);
-		Cell thirdNeighbor = new Cell(1, 4);
+		Cell currentCell = new CellImpl(2, 3);
+		Cell firstNeighbor = new CellImpl(2, 4);
+		Cell secondNeighbor = new CellImpl(2, 2);
+		Cell thirdNeighbor = new CellImpl(1, 4);
 		aliveCells.add(currentCell);
 		aliveCells.add(firstNeighbor);
 		aliveCells.add(secondNeighbor);
@@ -73,11 +74,11 @@ public class GameTest
 
 	@Test
 	public void cellSurroundedByFourNeighborsShouldDieWhenGenerationOccurs() {
-		Cell currentCell = new Cell(2, 3);
-		Cell firstNeighbor = new Cell(2, 4);
-		Cell secondNeighbor = new Cell(2, 2);
-		Cell thirdNeighbor = new Cell(1, 4);
-		Cell fourthNeighbor = new Cell(3, 2);
+		Cell currentCell = new CellImpl(2, 3);
+		Cell firstNeighbor = new CellImpl(2, 4);
+		Cell secondNeighbor = new CellImpl(2, 2);
+		Cell thirdNeighbor = new CellImpl(1, 4);
+		Cell fourthNeighbor = new CellImpl(3, 2);
 		aliveCells.add(currentCell);
 		aliveCells.add(firstNeighbor);
 		aliveCells.add(secondNeighbor);
@@ -90,10 +91,10 @@ public class GameTest
 	
 	@Test
 	public void deadCellShouldComesBackToLifeWhenGenerationOccursAndItIsSurroundedByThreeAliveNeigbors() {
-		Cell currentCell = new Cell(2, 3);
-		Cell firstNeighbor = new Cell(2, 4);
-		Cell secondNeighbor = new Cell(2, 2);
-		Cell thirdNeighbor = new Cell(1, 4);
+		Cell currentCell = new CellImpl(2, 3);
+		Cell firstNeighbor = new CellImpl(2, 4);
+		Cell secondNeighbor = new CellImpl(2, 2);
+		Cell thirdNeighbor = new CellImpl(1, 4);
 		aliveCells.add(firstNeighbor);
 		aliveCells.add(secondNeighbor);
 		aliveCells.add(thirdNeighbor);		
@@ -104,7 +105,7 @@ public class GameTest
 	
 	@Test 
 	public void cellInBottomOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
-		Cell currentCell = new Cell(6, 0);
+		Cell currentCell = new CellImpl(6, 0);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
@@ -113,7 +114,7 @@ public class GameTest
 	
 	@Test 
 	public void cellInTopOfXAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
-		Cell currentCell = new Cell(6, 6);
+		Cell currentCell = new CellImpl(6, 6);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
@@ -123,7 +124,7 @@ public class GameTest
 	
 	@Test 
 	public void cellInBottomOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
-		Cell currentCell = new Cell(0, 0);
+		Cell currentCell = new CellImpl(0, 0);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
@@ -132,7 +133,7 @@ public class GameTest
 	
 	@Test 
 	public void cellInTopOfYAxisEdgeShouldHaveThreeNeighborWhenGameInitiallyStarted(){
-		Cell currentCell = new Cell(0, 6);
+		Cell currentCell = new CellImpl(0, 6);
 		aliveCells.add(currentCell);		
 		game.setAliveCells(aliveCells);
 		Set<Cell> deadCells = NeighborUtility.getDeadSurroundingCells(aliveCells, currentCell, 4, 5);
@@ -142,19 +143,19 @@ public class GameTest
 	@Test 
 	public void cellsOutOfEdgeShouldNotBeAddedToGrid(){
 
-		aliveCells.add(new Cell(5, 5));
-		aliveCells.add(new Cell(-1, 5));	
-		aliveCells.add(new Cell(4, -1));
-		aliveCells.add(new Cell(4, 6));
+		aliveCells.add(new CellImpl(5, 5));
+		aliveCells.add(new CellImpl(-1, 5));	
+		aliveCells.add(new CellImpl(4, -1));
+		aliveCells.add(new CellImpl(4, 6));
 		game.setAliveCells(aliveCells);
 		assertThat(game.getAliveCells().size()).isEqualTo(0);
 	}
 	
 	@Test 
 	public void CellInCoordinate00ShouldBeAliveWhenGenerationOccursAndItIsSurroundedByThreeAliveCells(){
-		aliveCells.add(new Cell(1, 1));
-		aliveCells.add(new Cell(1, 0));	
-		aliveCells.add(new Cell(0, 1));
+		aliveCells.add(new CellImpl(1, 1));
+		aliveCells.add(new CellImpl(1, 0));	
+		aliveCells.add(new CellImpl(0, 1));
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
 		assertThat(game.getAliveCells().size()).isEqualTo(4);
@@ -163,9 +164,9 @@ public class GameTest
 	
 	@Test 
 	public void CellInCoordinate66ShouldBeAliveWhenGenerationOccursAndItIsSurroundedByThreeAliveCells(){
-		aliveCells.add(new Cell(3, 5));
-		aliveCells.add(new Cell(3, 4));	
-		aliveCells.add(new Cell(4, 4));
+		aliveCells.add(new CellImpl(3, 5));
+		aliveCells.add(new CellImpl(3, 4));	
+		aliveCells.add(new CellImpl(4, 4));
 		game.setAliveCells(aliveCells);
 		game.executeGeneration();
 		assertThat(game.getAliveCells().size()).isEqualTo(4);
@@ -173,9 +174,9 @@ public class GameTest
 	
 	@Test
 	public void outPutResultShouldBeReflectGenerationStrategy(){
-		aliveCells.add(new Cell(3, 5));
-		aliveCells.add(new Cell(3, 4));	
-		aliveCells.add(new Cell(4, 4));
+		aliveCells.add(new CellImpl(3, 5));
+		aliveCells.add(new CellImpl(3, 4));	
+		aliveCells.add(new CellImpl(4, 4));
 		String output = "4 5\n"+
 				"......\n"+
 				"......\n"+

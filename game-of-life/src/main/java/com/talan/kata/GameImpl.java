@@ -7,14 +7,16 @@ import java.util.stream.Collectors;
 public class GameImpl implements Game
 {
 	private Set<Cell> aliveCells = new HashSet<>();
+	private Rules rules;
 	private int edgeX;
 	private int edgeY;
 	private char ALIVE = '*';
 	private char DEAD = '.';
 	
-	public GameImpl(int edgeXAxis, int edgeYAxis) {
+	public GameImpl(int edgeXAxis, int edgeYAxis, Rules survivingRules) {
 		edgeX = edgeXAxis;
 		edgeY = edgeYAxis;
+		rules = survivingRules;
 	}
 
 	@Override
@@ -35,8 +37,7 @@ public class GameImpl implements Game
 	public void executeGeneration() {
 		Set<Cell> nextGeneration = new HashSet<>();
 		for (Cell cell : aliveCells) {
-			long aliveSurroundingCellsCount = NeighborUtility.countAliveSurroundingCells(aliveCells, cell, edgeX, edgeY);
-			if (aliveSurroundingCellsCount == 2 || aliveSurroundingCellsCount == 3) {
+			if (rules.shouldSurvive(aliveCells, cell, edgeX, edgeY)) {
 				nextGeneration.add(cell);
 			}
 			resurrectDeadCells(cell, nextGeneration);
@@ -48,8 +49,7 @@ public class GameImpl implements Game
 	private void resurrectDeadCells(Cell cell, Set<Cell> nextGeneration) {
 		Set<Cell> deadSurroundingCells = NeighborUtility.getDeadSurroundingCells(aliveCells, cell, edgeX, edgeY);
 		for (Cell deadCell : deadSurroundingCells) {
-			long liveNeighborCount = NeighborUtility.countAliveSurroundingCells(aliveCells , deadCell, edgeX, edgeY);
-			if (liveNeighborCount == 3) {
+			if (rules.shouldReborn(aliveCells , deadCell, edgeX, edgeY)) {
 				nextGeneration.add(deadCell);
 			}
 		}
